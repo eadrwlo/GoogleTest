@@ -4,23 +4,19 @@
 
 #ifndef UNTITLED_CONTROLLER_H
 #define UNTITLED_CONTROLLER_H
-
-#include <gmock/gmock.h>
-
-class ControllerIfU {
-public:
-    virtual ~ControllerIfU() {};
-    virtual bool isAllowedAscending(int i) = 0;
-};
+//#include <gtest/gtest.h>
+#include "ControllerIfU.h"
 
 class Controller : public ControllerIfU {
 public:
-    bool isAllowedAscending(int i) ;
-};
+    bool isAllowedAscending(int i) const;
+    void printA(int i) const;
+    bool isAllowedToPrint() const;
 
-class MockController : public Controller {
+
+private:
+    bool isPrintingAllowed;
 public:
-    MOCK_METHOD1(isAllowedAscending, bool(int i));
+    void setIsPrintingAllowed(bool isPrintingAllowed);
 };
-
 #endif //UNTITLED_CONTROLLER_H

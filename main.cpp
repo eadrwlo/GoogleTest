@@ -1,8 +1,10 @@
 #include <iostream>
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-//#include "Controller.h"
+#include "Controller/ControllerIfU.h"
 #include "sqrt.cpp"
+#include "Controller/MockController.h"
+
 using namespace std;
 using ::testing::NiceMock;
 
@@ -61,10 +63,61 @@ TEST(Div, Exception)
     EXPECT_THROW(div(1.0, 0.0), std::invalid_argument);
 };
 
+TEST(Mock, Real)
+{
+    MockController mockController;
+    mockController.delegatePrintA();
 
+    mockController.printA(1);
+};
+
+TEST(Mock, Real2)
+{
+    MockController mockController;
+    mockController.delegatePrintA();
+    mockController.printA(1);
+};
+
+TEST(Mock, Real3)
+{
+    MockControllerSecond mockController;
+
+    EXPECT_CALL(mockController, isAllowedToPrint())
+            .WillOnce(testing::Return(true));
+
+    ON_CALL(mockController, printA(testing::_))
+            .WillByDefault(testing::Invoke(&mockController, &MockControllerSecond::realPrintA));
+
+    mockController.printA(1);
+};
+
+
+TEST(Mock, Real4)
+{
+    ControllerIfU* mockController = new NiceMock<MockController>();
+    Controller controller;
+
+//    EXPECT_CALL(*(static_cast<MockController*>(mockController)), isAllowedToPrint())
+//            .WillOnce(testing::Return(true));
+
+    dynamic_cast<MockController*>(mockController)->printA(1);
+
+    delete mockController;
+};
+
+TEST(Mock, Real5)
+{
+    MockControllerSecond mockController;
+
+    EXPECT_CALL(mockController, isAllowedToPrint())
+            .WillOnce(testing::Return(true));
+
+    mockController.delegatePrintA();
+
+    mockController.printA(1);
+};
 
 int main(int argc, char **argv)  {
-    std::cout << "Hello, World!" << std::endl;
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
