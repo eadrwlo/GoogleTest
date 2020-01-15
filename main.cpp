@@ -82,7 +82,6 @@ TEST(Mock, Naggy)
     mockControllerSecond.realPrintA(0);
 }
 
-
 TEST(Mock, Real2)
 {
     testing::StrictMock<MockControllerSecond> mockControllerSecond;
@@ -91,12 +90,13 @@ TEST(Mock, Real2)
             .WillOnce(testing::Return(true));
 
     mockControllerSecond.realPrintA(0);
+
 }
+
 TEST(Mock, Real3)
 {
     MockControllerSecond mockController;
 
-    
     EXPECT_CALL(mockController, isAllowedToPrint(testing::_))
             .WillOnce(testing::Return(true));
 
@@ -105,7 +105,6 @@ TEST(Mock, Real3)
 
     mockController.printA(1);
 };
-
 
 TEST(Mock, Real4)
 {

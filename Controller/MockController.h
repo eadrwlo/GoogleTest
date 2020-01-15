@@ -63,7 +63,7 @@ public:
 
         EXPECT_CALL(*this, printA(testing::_))
                 .Times(1);
-    }
+        }
 
 };
 #endif //GOOGLETESTREPO_MOCKCONTROLLER_H
