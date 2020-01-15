@@ -9,7 +9,7 @@ class ControllerIfU {
 public:
     virtual ~ControllerIfU() {};
     virtual bool isAllowedAscending(int i) const = 0;
-    virtual bool isAllowedToPrint() const = 0;
+    virtual bool isAllowedToPrint(int i) const = 0;
     virtual void printA(int i) const = 0;
 };
 

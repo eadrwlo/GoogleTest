@@ -9,11 +9,11 @@ bool Controller::isAllowedAscending(int i) const
     return i != 0;
 }
 void Controller::printA(int i) const {
-    if(isAllowedToPrint())
+    if(isAllowedToPrint(i))
         std::cout << "printA(). Printing A" << std::endl;
 }
 
-bool Controller::isAllowedToPrint() const {
+bool Controller::isAllowedToPrint(int i) const {
     std::cout << "Real isAllowedToPrint()" << std::endl;
     return isPrintingAllowed;
 }

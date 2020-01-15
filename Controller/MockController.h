@@ -12,7 +12,7 @@ class MockController : public ControllerIfU {
     public:
     MOCK_CONST_METHOD1(isAllowedAscending, bool(int i));
     MOCK_CONST_METHOD1(printA, void(int i));
-    MOCK_CONST_METHOD0(isAllowedToPrint, bool());
+    MOCK_CONST_METHOD1(isAllowedToPrint, bool(int i));
     //MOCK_METHOD1(printA, void(int i));
 
     void delegatePrintA()
@@ -32,7 +32,7 @@ class MockControllerSecond : public Controller {
 public:
     MOCK_CONST_METHOD1(isAllowedAscending, bool(int i));
     MOCK_METHOD1(printA, void(int i));
-    MOCK_CONST_METHOD0(isAllowedToPrint, bool());
+    MOCK_CONST_METHOD1(isAllowedToPrint, bool(int i));
 
 
     void realPrintA(int i)
@@ -40,7 +40,22 @@ public:
         Controller::printA(i);
     }
 
-    void delegatePrintA() {
+
+//    void delegateToParent(Enum toDelegateName) {
+//        switch:
+//        {
+//            case isAllowedAscending:
+//                isAllowedAscending
+//            case:isAllowedToPrint
+//                    isAllowedToPrint;
+//
+//
+//        }
+//    }
+
+
+
+        void delegatePrintA() {
         ON_CALL(*this, printA(testing::_))
                 .WillByDefault(testing::Invoke([&](int i) {
                     Controller::printA(i);

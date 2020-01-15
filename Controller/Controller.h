@@ -11,7 +11,7 @@ class Controller : public ControllerIfU {
 public:
     bool isAllowedAscending(int i) const;
     void printA(int i) const;
-    bool isAllowedToPrint() const;
+    bool isAllowedToPrint(int i) const;
 
 
 private:

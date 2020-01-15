@@ -45,7 +45,7 @@ TEST_F(TestData, Mock)
     EXPECT_CALL(*mockControllerPtr, isAllowedAscending(testing::_))
             .WillOnce(testing::Return(true));
 
-    isProperOrder(vect, mockControllerPtr, 1);
+    ASSERT_TRUE(isProperOrder(vect, mockControllerPtr, 1));
 }
 
 TEST(Div, Pos)
@@ -54,35 +54,50 @@ TEST(Div, Pos)
     double result = div(5.0, 2.0);
     cout << result << endl;
     ASSERT_FLOAT_EQ(result, expectedResult);
-
-    ASSERT_FLOAT_EQ(div(0.0, 2.0), 0.0);
 };
 
 TEST(Div, Exception)
 {
     EXPECT_THROW(div(1.0, 0.0), std::invalid_argument);
+    EXPECT_THROW(div(0.0, 1.0), std::invalid_argument);
 };
 
-TEST(Mock, Real)
+//TEST(Mock, Real)
+//{
+//    MockController mockController;
+//    mockController.delegatePrintA();
+//
+//    mockController.realPrintA(1);
+//};
+
+TEST(Mock, Nice)
 {
-    MockController mockController;
-    mockController.delegatePrintA();
+    testing::NiceMock<MockControllerSecond> mockControllerSecond;
+    mockControllerSecond.realPrintA(0);
+}
 
-    mockController.printA(1);
-};
+TEST(Mock, Naggy)
+{
+    testing::NaggyMock<MockControllerSecond> mockControllerSecond;
+    mockControllerSecond.realPrintA(0);
+}
+
 
 TEST(Mock, Real2)
 {
-    MockController mockController;
-    mockController.delegatePrintA();
-    mockController.printA(1);
-};
+    testing::StrictMock<MockControllerSecond> mockControllerSecond;
 
+    EXPECT_CALL(mockControllerSecond, isAllowedToPrint(0))
+            .WillOnce(testing::Return(true));
+
+    mockControllerSecond.realPrintA(0);
+}
 TEST(Mock, Real3)
 {
     MockControllerSecond mockController;
 
-    EXPECT_CALL(mockController, isAllowedToPrint())
+    
+    EXPECT_CALL(mockController, isAllowedToPrint(testing::_))
             .WillOnce(testing::Return(true));
 
     ON_CALL(mockController, printA(testing::_))
@@ -109,7 +124,7 @@ TEST(Mock, Real5)
 {
     MockControllerSecond mockController;
 
-    EXPECT_CALL(mockController, isAllowedToPrint())
+    EXPECT_CALL(mockController, isAllowedToPrint(testing::_))
             .WillOnce(testing::Return(true));
 
     mockController.delegatePrintA();

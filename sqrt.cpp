@@ -37,8 +37,10 @@ bool isPalindrome (std::string word){
 }
 
 double div(const double a, const double b){
-    if(b == 0)
-        throw std::invalid_argument("Invalid argument 0!");
+    if(b == 0.0)
+        throw std::invalid_argument("Invalid argument second!");
+    if(a == 0.0)
+        throw std::invalid_argument("Invalid argument first!");
     return a/b;
 }
 
